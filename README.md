@@ -7,10 +7,10 @@ repetoir
 
 ![repetoir](./src/site/resources/repetoir.jpg?raw=true)
 
-| JVM                       | Platform | Status |
-|---------------------------|----------|--------|
-| OpenJDK (Temurin) Current | Linux    | [![Build (OpenJDK (Temurin) Current,   Linux)](https://img.shields.io/github/workflow/status/io7m/repetoir/main.linux.temurin.current)](https://github.com/io7m/repetoir/actions?query=workflow%3Amain.linux.temurin.current)     |
-| OpenJDK (Temurin) Current | Windows  | [![Build (OpenJDK (Temurin) Current, Windows)](https://img.shields.io/github/workflow/status/io7m/repetoir/main.windows.temurin.current)](https://github.com/io7m/repetoir/actions?query=workflow%3Amain.windows.temurin.current) |
-| OpenJDK (Temurin) LTS     | Linux    | [![Build (OpenJDK (Temurin) LTS,       Linux)](https://img.shields.io/github/workflow/status/io7m/repetoir/main.linux.temurin.lts)](https://github.com/io7m/repetoir/actions?query=workflow%3Amain.linux.temurin.lts)             |
-| OpenJDK (Temurin) LTS     | Windows  | [![Build (OpenJDK (Temurin) LTS,     Windows)](https://img.shields.io/github/workflow/status/io7m/repetoir/main.windows.temurin.lts)](https://github.com/io7m/repetoir/actions?query=workflow%3Amain.windows.temurin.lts)         |
+| JVM                       | Platform | Status                                                                                                                                                                                                                                                             |
+|---------------------------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| OpenJDK (Temurin) Current | Linux    | [![Build (OpenJDK (Temurin) Current,   Linux)](https://img.shields.io/github/actions/workflow/status/io7m/repetoir/workflows/main.linux.temurin.current.yml?branch=develop)](https://github.com/io7m/repetoir/actions?query=workflow%3Amain.linux.temurin.current) |
+| OpenJDK (Temurin) Current | Windows  | [![Build (OpenJDK (Temurin) Current, Windows)](https://img.shields.io/github/actions/workflow/status/io7m/repetoir/workflows/main.windows.temurin.current.yml?branch=develop)](https://github.com/io7m/repetoir/actions?query=workflow%3Amain.windows.temurin.current)            |
+| OpenJDK (Temurin) LTS     | Linux    | [![Build (OpenJDK (Temurin) LTS,       Linux)](https://img.shields.io/github/actions/workflow/status/io7m/repetoir/workflows/main.linux.temurin.lts.yml?branch=develop)](https://github.com/io7m/repetoir/actions?query=workflow%3Amain.linux.temurin.lts)                        |
+| OpenJDK (Temurin) LTS     | Windows  | [![Build (OpenJDK (Temurin) LTS,     Windows)](https://img.shields.io/github/actions/workflow/status/io7m/repetoir/workflows/main.windows.temurin.lts.yml?branch=develop)](https://github.com/io7m/repetoir/actions?query=workflow%3Amain.windows.temurin.lts)                    |
 
