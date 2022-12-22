@@ -26,23 +26,27 @@ import com.io7m.repetoir.core.RPServiceException;
 import com.io7m.repetoir.core.RPServiceType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Flow;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@Timeout(value = 20L, unit = TimeUnit.SECONDS)
 public final class RPServiceDirectoryTest
 {
   private ArrayBlockingQueue<RPServiceEventType> events;
+  private CountDownLatch completionLatch;
 
   private static final class FakeService
     implements RPServiceType
@@ -75,18 +79,24 @@ public final class RPServiceDirectoryTest
   public void setup()
   {
     this.events = new ArrayBlockingQueue<>(100);
+    this.completionLatch = new CountDownLatch(1);
   }
 
   private static final class PerpetualSubscriber
     implements Flow.Subscriber<RPServiceEventType>
   {
+    private final CountDownLatch latch;
     private final ArrayBlockingQueue<RPServiceEventType> events;
     private Flow.Subscription subscription;
 
     PerpetualSubscriber(
+      final CountDownLatch inLatch,
       final ArrayBlockingQueue<RPServiceEventType> inEvents)
     {
-      this.events = Objects.requireNonNull(inEvents, "events");
+      this.latch =
+        Objects.requireNonNull(inLatch, "inLatch");
+      this.events =
+        Objects.requireNonNull(inEvents, "events");
     }
 
     @Override
@@ -109,13 +119,13 @@ public final class RPServiceDirectoryTest
     public void onError(
       final Throwable throwable)
     {
-
+      this.latch.countDown();
     }
 
     @Override
     public void onComplete()
     {
-
+      this.latch.countDown();
     }
   }
 
@@ -130,7 +140,8 @@ public final class RPServiceDirectoryTest
     throws Exception
   {
     final var s = new RPServiceDirectory();
-    s.events().subscribe(new PerpetualSubscriber(this.events));
+    s.events().subscribe(
+      new PerpetualSubscriber(this.completionLatch, this.events));
 
     assertThrows(RPServiceException.class, () -> {
       s.requireService(FakeService.class);
@@ -145,7 +156,7 @@ public final class RPServiceDirectoryTest
 
     s.close();
 
-    Thread.sleep(500L);
+    this.completionLatch.await(10L, TimeUnit.SECONDS);
     assertInstanceOf(RPServiceRegistered.class, this.events.poll());
     assertInstanceOf(RPServiceDirectoryClosing.class, this.events.poll());
     assertInstanceOf(RPServiceDirectoryClosed.class, this.events.poll());
@@ -163,7 +174,8 @@ public final class RPServiceDirectoryTest
     throws Exception
   {
     final var s = new RPServiceDirectory();
-    s.events().subscribe(new PerpetualSubscriber(this.events));
+    s.events().subscribe(
+      new PerpetualSubscriber(this.completionLatch, this.events));
 
     assertThrows(RPServiceException.class, () -> {
       s.requireService(FakeService.class);
@@ -184,7 +196,7 @@ public final class RPServiceDirectoryTest
 
     s.close();
 
-    Thread.sleep(500L);
+    this.completionLatch.await(10L, TimeUnit.SECONDS);
     assertInstanceOf(RPServiceRegistered.class, this.events.poll());
     assertInstanceOf(RPServiceRegistered.class, this.events.poll());
     assertInstanceOf(RPServiceRegistered.class, this.events.poll());
@@ -204,7 +216,8 @@ public final class RPServiceDirectoryTest
     throws Exception
   {
     final var s = new RPServiceDirectory();
-    s.events().subscribe(new PerpetualSubscriber(this.events));
+    s.events().subscribe(
+      new PerpetualSubscriber(this.completionLatch, this.events));
 
     final var f = new CrashClosedService();
     s.register(CrashClosedService.class, f);
@@ -224,7 +237,8 @@ public final class RPServiceDirectoryTest
     throws Exception
   {
     final var s = new RPServiceDirectory();
-    s.events().subscribe(new PerpetualSubscriber(this.events));
+    s.events().subscribe(
+      new PerpetualSubscriber(this.completionLatch, this.events));
 
     assertThrows(RPServiceException.class, () -> {
       s.requireService(FakeService.class);
@@ -245,7 +259,7 @@ public final class RPServiceDirectoryTest
     assertEquals(List.of(), s.services());
     s.close();
 
-    Thread.sleep(500L);
+    this.completionLatch.await(10L, TimeUnit.SECONDS);
     assertInstanceOf(RPServiceRegistered.class, this.events.poll());
     assertInstanceOf(RPServiceDeregistered.class, this.events.poll());
     assertInstanceOf(RPServiceDirectoryClosing.class, this.events.poll());
@@ -264,7 +278,8 @@ public final class RPServiceDirectoryTest
     throws Exception
   {
     final var s = new RPServiceDirectory();
-    s.events().subscribe(new PerpetualSubscriber(this.events));
+    s.events().subscribe(
+      new PerpetualSubscriber(this.completionLatch, this.events));
 
     assertThrows(RPServiceException.class, () -> {
       s.requireService(FakeService.class);
@@ -304,7 +319,7 @@ public final class RPServiceDirectoryTest
     s.deregister(FakeService.class, f0);
     s.close();
 
-    Thread.sleep(500L);
+    this.completionLatch.await(10L, TimeUnit.SECONDS);
     assertInstanceOf(RPServiceRegistered.class, this.events.poll());
     assertInstanceOf(RPServiceRegistered.class, this.events.poll());
     assertInstanceOf(RPServiceRegistered.class, this.events.poll());
@@ -327,7 +342,8 @@ public final class RPServiceDirectoryTest
     throws Exception
   {
     final var s = new RPServiceDirectory();
-    s.events().subscribe(new PerpetualSubscriber(this.events));
+    s.events().subscribe(
+      new PerpetualSubscriber(this.completionLatch, this.events));
 
     assertThrows(RPServiceException.class, () -> {
       s.requireService(FakeService.class);
@@ -355,7 +371,7 @@ public final class RPServiceDirectoryTest
     s.deregisterAll(FakeService.class);
     s.close();
 
-    Thread.sleep(500L);
+    this.completionLatch.await(10L, TimeUnit.SECONDS);
     assertInstanceOf(RPServiceRegistered.class, this.events.poll());
     assertInstanceOf(RPServiceRegistered.class, this.events.poll());
     assertInstanceOf(RPServiceRegistered.class, this.events.poll());
