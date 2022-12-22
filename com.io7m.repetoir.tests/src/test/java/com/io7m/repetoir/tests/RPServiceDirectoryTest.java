@@ -145,6 +145,7 @@ public final class RPServiceDirectoryTest
 
     s.close();
 
+    Thread.sleep(500L);
     assertInstanceOf(RPServiceRegistered.class, this.events.poll());
     assertInstanceOf(RPServiceDirectoryClosing.class, this.events.poll());
     assertInstanceOf(RPServiceDirectoryClosed.class, this.events.poll());
