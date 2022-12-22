@@ -182,6 +182,7 @@ public final class RPServiceDirectoryTest
 
     s.close();
 
+    Thread.sleep(500L);
     assertInstanceOf(RPServiceRegistered.class, this.events.poll());
     assertInstanceOf(RPServiceRegistered.class, this.events.poll());
     assertInstanceOf(RPServiceRegistered.class, this.events.poll());
@@ -242,6 +243,7 @@ public final class RPServiceDirectoryTest
     assertEquals(List.of(), s.services());
     s.close();
 
+    Thread.sleep(500L);
     assertInstanceOf(RPServiceRegistered.class, this.events.poll());
     assertInstanceOf(RPServiceDeregistered.class, this.events.poll());
     assertInstanceOf(RPServiceDirectoryClosing.class, this.events.poll());
@@ -300,6 +302,7 @@ public final class RPServiceDirectoryTest
     s.deregister(FakeService.class, f0);
     s.close();
 
+    Thread.sleep(500L);
     assertInstanceOf(RPServiceRegistered.class, this.events.poll());
     assertInstanceOf(RPServiceRegistered.class, this.events.poll());
     assertInstanceOf(RPServiceRegistered.class, this.events.poll());
@@ -350,7 +353,7 @@ public final class RPServiceDirectoryTest
     s.deregisterAll(FakeService.class);
     s.close();
 
-    Thread.sleep(1_00L);
+    Thread.sleep(500L);
     assertInstanceOf(RPServiceRegistered.class, this.events.poll());
     assertInstanceOf(RPServiceRegistered.class, this.events.poll());
     assertInstanceOf(RPServiceRegistered.class, this.events.poll());
