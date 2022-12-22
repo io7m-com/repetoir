@@ -31,6 +31,7 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.Flow;
 
@@ -41,7 +42,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public final class RPServiceDirectoryTest
 {
-  private ConcurrentLinkedDeque<RPServiceEventType> events;
+  private ArrayBlockingQueue<RPServiceEventType> events;
 
   private static final class FakeService
     implements RPServiceType
@@ -73,17 +74,17 @@ public final class RPServiceDirectoryTest
   @BeforeEach
   public void setup()
   {
-    this.events = new ConcurrentLinkedDeque<>();
+    this.events = new ArrayBlockingQueue<>(100);
   }
 
   private static final class PerpetualSubscriber
     implements Flow.Subscriber<RPServiceEventType>
   {
-    private final ConcurrentLinkedDeque<RPServiceEventType> events;
+    private final ArrayBlockingQueue<RPServiceEventType> events;
     private Flow.Subscription subscription;
 
     PerpetualSubscriber(
-      final ConcurrentLinkedDeque<RPServiceEventType> inEvents)
+      final ArrayBlockingQueue<RPServiceEventType> inEvents)
     {
       this.events = Objects.requireNonNull(inEvents, "events");
     }
