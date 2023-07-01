@@ -8,7 +8,7 @@
   <parent>
     <groupId>com.io7m.primogenitor</groupId>
     <artifactId>com.io7m.primogenitor.full</artifactId>
-    <version>7.5.0</version>
+    <version>8.0.0-beta0001</version>
   </parent>
 
   <groupId>com.io7m.repetoir</groupId>
@@ -97,7 +97,7 @@
       <dependency>
         <groupId>ch.qos.logback</groupId>
         <artifactId>logback-classic</artifactId>
-        <version>1.4.7</version>
+        <version>1.4.8</version>
       </dependency>
       <dependency>
         <groupId>org.junit.jupiter</groupId>
@@ -122,7 +122,7 @@
       <dependency>
         <groupId>org.mockito</groupId>
         <artifactId>mockito-core</artifactId>
-        <version>5.3.1</version>
+        <version>5.4.0</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
