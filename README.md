@@ -22,7 +22,7 @@ A minimalist application service directory.
 
   * Register and deregister application services.
   * Subscribe to service events to be notified of changes.
-  * Written in pure Java 17.
+  * Written in pure Java 21.
   * [OSGi](https://www.osgi.org/) ready.
   * [JPMS](https://en.wikipedia.org/wiki/Java_Platform_Module_System) ready.
   * ISC license.
