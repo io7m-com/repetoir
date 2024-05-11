@@ -2,9 +2,11 @@
 
 <div xmlns="http://www.w3.org/1999/xhtml">
   <ul>
+    <li>Register and deregister application services.</li>
+    <li>Subscribe to service events to be notified of changes.</li>
     <li>Mutable, observable service directory.</li>
-    <li><a href="http://www.osgi.org">OSGi</a>-ready</li>
-    <li><a href="https://en.wikipedia.org/wiki/Java_Platform_Module_System">JPMS</a>-ready</li>
-    <li>ISC license</li>
+    <li><a href="http://www.osgi.org">OSGi</a>-ready.</li>
+    <li><a href="https://en.wikipedia.org/wiki/Java_Platform_Module_System">JPMS</a>-ready.</li>
+    <li>ISC license.</li>
   </ul>
 </div>
