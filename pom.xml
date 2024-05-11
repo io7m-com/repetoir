@@ -18,7 +18,7 @@
   <packaging>pom</packaging>
   <name>com.io7m.repetoir</name>
   <description>Service directory</description>
-  <url>https://www.github.com/io7m-com/repetoir</url>
+  <url>https://www.io7m.com/software/repetoir</url>
 
   <modules>
     <module>com.io7m.repetoir.core</module>
