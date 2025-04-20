@@ -16,10 +16,13 @@
 
 package com.io7m.repetoir.core;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * The base type of services.
  */
 
+@ProviderType
 public interface RPServiceType
 {
   /**

@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Flow;
 import java.util.concurrent.SubmissionPublisher;
@@ -182,6 +183,19 @@ public final class RPServiceDirectory implements RPServiceDirectoryWritableType
         .flatMap(Collection::stream)
         .map(RPServiceType.class::cast)
         .collect(Collectors.toList());
+    }
+  }
+
+  @Override
+  @SuppressWarnings("unchecked")
+  public Set<Class<? extends RPServiceType>> serviceKeys()
+  {
+    synchronized (this.serviceLock) {
+      return (Set<Class<? extends RPServiceType>>) (Object)
+        this.services.keySet()
+        .stream()
+        .map(x -> Class.class.cast(x))
+        .collect(Collectors.toSet());
     }
   }
 

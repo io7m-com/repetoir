@@ -16,15 +16,19 @@
 
 package com.io7m.repetoir.core;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 import java.io.Closeable;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.Flow;
 
 /**
  * The type of service directories.
  */
 
+@ProviderType
 public interface RPServiceDirectoryType extends Closeable
 {
   /**
@@ -74,6 +78,12 @@ public interface RPServiceDirectoryType extends Closeable
    */
 
   List<RPServiceType> services();
+
+  /**
+   * @return A read-only set of the classes under which services are registered
+   */
+
+  Set<Class<? extends RPServiceType>> serviceKeys();
 
   /**
    * @return A source of service directory events

@@ -32,6 +32,7 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Flow;
@@ -153,6 +154,10 @@ public final class RPServiceDirectoryTest
     assertEquals(f, s.optionalService(FakeService.class).orElseThrow());
 
     assertEquals(List.of(f), s.services());
+    assertEquals(
+      Set.of(FakeService.class),
+      s.serviceKeys()
+    );
 
     s.close();
 
@@ -192,6 +197,10 @@ public final class RPServiceDirectoryTest
     assertEquals(
       List.of(f0, f1, f2),
       s.optionalServices(FakeService.class)
+    );
+    assertEquals(
+      Set.of(FakeService.class),
+      s.serviceKeys()
     );
 
     s.close();
@@ -248,6 +257,10 @@ public final class RPServiceDirectoryTest
     s.register(FakeService.class, f);
     assertEquals(f, s.requireService(FakeService.class));
     assertEquals(f, s.optionalService(FakeService.class).orElseThrow());
+    assertEquals(
+      Set.of(FakeService.class),
+      s.serviceKeys()
+    );
 
     assertEquals(List.of(f), s.services());
     s.deregister(FakeService.class, f);
@@ -257,6 +270,7 @@ public final class RPServiceDirectoryTest
     });
 
     assertEquals(List.of(), s.services());
+    assertEquals(Set.of(), s.serviceKeys());
     s.close();
 
     this.completionLatch.await(10L, TimeUnit.SECONDS);
@@ -297,11 +311,19 @@ public final class RPServiceDirectoryTest
       List.of(f0, f1, f2),
       s.optionalServices(FakeService.class)
     );
+    assertEquals(
+      Set.of(FakeService.class),
+      s.serviceKeys()
+    );
 
     s.deregister(FakeService.class, f1);
     assertEquals(
       List.of(f0, f2),
       s.optionalServices(FakeService.class)
+    );
+    assertEquals(
+      Set.of(FakeService.class),
+      s.serviceKeys()
     );
 
     s.deregister(FakeService.class, f2);
@@ -309,11 +331,19 @@ public final class RPServiceDirectoryTest
       List.of(f0),
       s.optionalServices(FakeService.class)
     );
+    assertEquals(
+      Set.of(FakeService.class),
+      s.serviceKeys()
+    );
 
     s.deregister(FakeService.class, f0);
     assertEquals(
       List.of(),
       s.optionalServices(FakeService.class)
+    );
+    assertEquals(
+      Set.of(),
+      s.serviceKeys()
     );
 
     s.deregister(FakeService.class, f0);
@@ -361,11 +391,19 @@ public final class RPServiceDirectoryTest
       List.of(f0, f1, f2),
       s.optionalServices(FakeService.class)
     );
+    assertEquals(
+      Set.of(FakeService.class),
+      s.serviceKeys()
+    );
 
     s.deregisterAll(FakeService.class);
     assertEquals(
       List.of(),
       s.optionalServices(FakeService.class)
+    );
+    assertEquals(
+      Set.of(),
+      s.serviceKeys()
     );
 
     s.deregisterAll(FakeService.class);
