@@ -39,6 +39,9 @@ public sealed interface RPServiceEventType
   {
     /**
      * A service was registered.
+     *
+     * @param serviceType The type under which the service is registered
+     * @param instance    The service instance
      */
 
     public RPServiceRegistered
@@ -69,6 +72,9 @@ public sealed interface RPServiceEventType
   {
     /**
      * A service was deregistered.
+     *
+     * @param serviceType The type under which the service is registered
+     * @param instance    The service instance
      */
 
     public RPServiceDeregistered
